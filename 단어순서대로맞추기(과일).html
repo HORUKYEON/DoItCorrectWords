@@ -1,0 +1,80 @@
+﻿<html>
+	<head> <title> 단어순서대로맞추기(과일) </title> </head>
+	<body>
+		<input type=button id="showscore" value="게임방법" onclick="showPopup()"/>
+		<input type=button id="Gamebutton" value="게임시작" onclick="gamestart()"/>
+		<script type = "text/javascript">
+			var quest, fruit, score, first_score;
+			
+			fruit = ["사과", "수박", "포도", "딸기", "바나나", "망고", "감", "오렌지", "배", "두리안", "블루베리", "자몽", "멜론", "복숭아", "레몬", "귤", "참외", "파인애플",
+						"밤", "석류", "체리", "키위", "오디", "아보카도", "앵두", "오미자", "살구", "아사이베리", "라임", "무화과", "매실", "청포도", "산딸기", "돌배", "자두",
+						"코코넛", "거봉", "다래", "대추", "한라봉", "유자", "모과", "머루"
+					];
+			quest = [];
+			score = 0;
+			first_score = 0;
+			
+			function showPopup()
+			{
+				window.open("showPopup.html", "게임방법", "width=800, height=300, left=100, top=50");
+			}
+			
+			
+			function savescore()
+			{
+				li_score = [];
+				li_score.sort();
+				document.write(li_score);
+			}
+			
+			
+			function plus_fruit()
+			{
+				level = eval(prompt("레벨을 선택하세요(1~20)"," "));
+				
+				for(i=1;i<=level;i++)
+				{
+					quest.push(fruit[Math.floor(Math.random()*fruit.length)])
+				}
+				
+				alert("다음 단어를 순서대로 외우세요.\n"+quest);
+			}
+			
+			
+			function gamestart()
+			{
+				plus_fruit();
+				savescore();
+				
+				while(quest)
+				{
+					if(quest.length==0)
+						break;
+				
+					name = prompt("단어를 순서대로 입력하세요.([0] : 단어 확인하기(-15점)"," ");
+				
+					if(name == quest[0])
+					{
+						alert("정답입니다.");
+						quest.splice(0,1);
+						score += 10;
+					}
+					else if(name == '0')
+					{
+						alert(quest);
+						score -= 15;
+					}
+					else
+					{
+						alert("틀렸습니다. 다시입력하세요");
+						score -= 5;
+					}
+				}
+				
+				document.write("<br>[게임종료]"+"<br>");
+				document.write("점수 : "+score);
+				document.write("<br>다시하기 : F5키를 눌러주세요!!");
+			}
+		</script>
+	</body>
+</html>
